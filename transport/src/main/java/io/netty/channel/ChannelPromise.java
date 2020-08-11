@@ -22,6 +22,10 @@ import io.netty.util.concurrent.Promise;
 /**
  * Special {@link ChannelFuture} which is writable.
  */
+/**
+ * 特殊的{@link ChannelFuture}是可写的。
+ * 即可以设置成功、失败状态
+ */
 public interface ChannelPromise extends ChannelFuture, Promise<Void> {
 
     @Override

@@ -18,6 +18,10 @@ package io.netty.util.concurrent;
 /**
  * Special {@link Future} which is writable.
  */
+
+/**
+ * 特殊的{@link Future}是可写的。可以设置成功失败状态
+ */
 public interface Promise<V> extends Future<V> {
 
     /**
@@ -25,6 +29,10 @@ public interface Promise<V> extends Future<V> {
      * listeners.
      *
      * If it is success or failed already it will throw an {@link IllegalStateException}.
+     */
+    /**
+     * 将此{@link Future}标记为成功并且通知所有监听器
+     * 如果它已经成功或失败，则抛出{@link IllegalStateException}
      */
     Promise<V> setSuccess(V result);
 
@@ -36,6 +44,11 @@ public interface Promise<V> extends Future<V> {
      *         a success. Otherwise {@code false} because this future is
      *         already marked as either a success or a failure.
      */
+    /**
+     * 将此{@link Future}标记为成功，并通知所有监听器
+     * 如果成功标记返回true
+     * 如果已经成功或失败，则返回false
+     */
     boolean trySuccess(V result);
 
     /**
@@ -43,6 +56,9 @@ public interface Promise<V> extends Future<V> {
      * listeners.
      *
      * If it is success or failed already it will throw an {@link IllegalStateException}.
+     */
+    /**
+     * 标记为失败，如果标记不成功，抛出{@link IllegalStateException}
      */
     Promise<V> setFailure(Throwable cause);
 
@@ -54,13 +70,20 @@ public interface Promise<V> extends Future<V> {
      *         a failure. Otherwise {@code false} because this future is
      *         already marked as either a success or a failure.
      */
+    /**
+     * 标记为失败，标记成功返回true
+     * 否则返回false
+     */
     boolean tryFailure(Throwable cause);
 
     /**
      * Make this future impossible to cancel.
      *
      * @return {@code true} if and only if successfully marked this future as uncancellable or it is already done
-     *         without being cancelled.  {@code false} if this future has been cancelled already.
+     * without being cancelled.  {@code false} if this future has been cancelled already.
+     */
+    /**
+     * 标记为不可取消
      */
     boolean setUncancellable();
 

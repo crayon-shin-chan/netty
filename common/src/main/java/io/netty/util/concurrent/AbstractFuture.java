@@ -25,24 +25,32 @@ import java.util.concurrent.TimeoutException;
  *
  * @param <V>
  */
+
+/**
+ * 不允许取消的抽象{@link Future}基类
+ */
 public abstract class AbstractFuture<V> implements Future<V> {
 
+    /**
+     * 阻塞获取结果
+     */
     @Override
     public V get() throws InterruptedException, ExecutionException {
-        await();
+        await();//等待完成
 
         Throwable cause = cause();
         if (cause == null) {
-            return getNow();
+            return getNow();//如果没有异常，则返回当前值
         }
         if (cause instanceof CancellationException) {
-            throw (CancellationException) cause;
+            throw (CancellationException) cause;//取消异常
         }
-        throw new ExecutionException(cause);
+        throw new ExecutionException(cause);//执行异常
     }
 
     @Override
     public V get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+        /* 等待指定时间，如果完成，则获取值 */
         if (await(timeout, unit)) {
             Throwable cause = cause();
             if (cause == null) {
@@ -53,6 +61,7 @@ public abstract class AbstractFuture<V> implements Future<V> {
             }
             throw new ExecutionException(cause);
         }
+        /* 未完成则抛出超时异常 */
         throw new TimeoutException();
     }
 }

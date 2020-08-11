@@ -50,6 +50,10 @@ import java.nio.channels.WritableByteChannel;
  *
  * <h3>Not all transports support it</h3>
  */
+
+/**
+ * 通过{@link Channel}发送的文件区域，支持零拷贝文件传输
+ */
 public interface FileRegion extends ReferenceCounted {
 
     /**
