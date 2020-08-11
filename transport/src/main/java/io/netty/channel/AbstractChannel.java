@@ -40,14 +40,23 @@ import java.util.concurrent.RejectedExecutionException;
 /**
  * A skeletal {@link Channel} implementation.
  */
+
+/**
+ * {@link Channel}接口的基类实现
+ */
 public abstract class AbstractChannel extends DefaultAttributeMap implements Channel {
 
     private static final InternalLogger logger = InternalLoggerFactory.getInstance(AbstractChannel.class);
 
+    /* 父级Channel */
     private final Channel parent;
+    /* 唯一标识符 */
     private final ChannelId id;
+    /* 内部操作 */
     private final Unsafe unsafe;
+    /* 默认管道 */
     private final DefaultChannelPipeline pipeline;
+    /* 什么都不做的ChannelPromise */
     private final VoidChannelPromise unsafeVoidPromise = new VoidChannelPromise(this, false);
     private final CloseFuture closeFuture = new CloseFuture(this);
 
