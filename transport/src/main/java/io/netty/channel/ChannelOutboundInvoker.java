@@ -198,6 +198,15 @@ public interface ChannelOutboundInvoker {
      * method called of the next {@link ChannelOutboundHandler} contained in the {@link ChannelPipeline} of the
      * {@link Channel}.
      */
+    /**
+     * 请求从{@link Channel}读取数据到第一个入站缓冲区，
+     * 如果已读取数据，则触发{@link ChannelInboundHandler#channelRead(ChannelHandlerContext, Object)}事件
+     * 并触发{@link ChannelInboundHandler#channelReadComplete(ChannelHandlerContext)}事件
+     * 以便处理程序可以决定继续读取
+     * 如果已经右一个待处理的读取操作，则此方法不执行任何操作
+     * 这将导致{@link ChannelPipeline}中包含的下一个{@link ChannelOutboundHandler}
+     * 调用{@link ChannelOutboundHandler#read(ChannelHandlerContext)}方法
+     */
     ChannelOutboundInvoker read();
 
     /**
